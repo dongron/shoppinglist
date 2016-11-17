@@ -1,0 +1,12 @@
+
+npm init
+npm install ioredis
+npm install expresss --save
+
+dodanie server.js
+dowanie metod
+dodanie zrodel
+dodanie index.htm
+
+
+
