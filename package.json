@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/dongron/shoppinglist#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "multer": "^1.2.0",
+    "mustache": "^2.3.0"
   }
 }

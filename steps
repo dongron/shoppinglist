@@ -1,12 +1,25 @@
-
+Steps:
 npm init
 npm install ioredis
 npm install expresss --save
+npm install --save body-parser	//for post method
+npm install --save multer	//nie !
+npm install mustache --save
+npm install consolidate
 
 dodanie server.js
 dowanie metod
 dodanie zrodel
 dodanie index.htm
+dodanie list.htm
+
+
+
+Usage
+console: 
+redis: redis-cli
+check packages & versions: npm list 
+
 
 
 
