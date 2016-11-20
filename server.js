@@ -100,6 +100,35 @@ app.post('/add', function(req, res) {
 	res.redirect('/list');
 })
 
+var editingElem;
+
+app.post('/editElem', function(req, res) {
+	editingElem = req.body.item; 
+
+	if(!editingElem) return;
+	console.log("wcisnieto edycje: "+ editingElem);
+	res.redirect('/edit');
+})
+
+// wyswietlenie ekranu edycji
+app.get('/edit', function(req, res) {
+	console.log("get w edit: "+ editingElem);
+	if(!editingElem) return;
+	res.render(__dirname + "/" +'edit.html',{item: editingElem});
+})
+
+
+//to do !!
+// zapisanie zmian i przekierownie do listy
+app.post('/edit', function(req, res) {
+	//linsert przed edytowany, potem usunac edytowany 
+
+	if(!editingElem) return;
+	if(!newItem) return;
+	redis.rpush(User.list, newItem);
+	console.log("dodano: "+ newItem);
+	res.redirect('/list');
+})
 
 var listHTML = "<br> Your list: <div>	Siema </div>";
 
