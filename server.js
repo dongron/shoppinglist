@@ -26,54 +26,9 @@ var server = app.listen(8082, function () {
 })
 // jeszcze do przemyslenia zmiana uzytkownika
 // 1. ekran - startowy : dodawanie z pola pod, usuwanie z listy,  
-
 // 2. ekran edycji elementu
-/*app.get('/modifyProduct', function (req, res) {
-   res.send('Hello World');
-})
 
-app.get('/modifyProduct', function (req, res) {
-   res.send('Hello World');
-})
-
-app.get('/process_get', function (req, res) {
-   // Prepare output in JSON format
-   response = {
-      first_name:req.query.first_name,
-      last_name:req.query.last_name
-   };
-   console.log(response);
-   res.end(JSON.stringify(response));
-})
-*/
-
-
-
-
-
-
-/*
-
-app.get('/index.htm', function (req, res) {
-   res.sendFile( __dirname + "/" + "index.htm" );
-})
-
-app.get('/process_get', function (req, res) {
-   // Prepare output in JSON format
-   response = {
-      first_name:req.query.first_name,
-      last_name:req.query.last_name
-   };
-   console.log(response);
-   res.end(JSON.stringify(response));
-})
-
-
-*/
-
-
-
-var User = {logn:'', pass:'', listId:''};
+var User = {logn:'test', pass:'test1', list:'list1'};
 var isLocked = false;
 
 
@@ -82,20 +37,6 @@ var isLocked = false;
 app.get('/', function (req, res) {
    res.sendFile( __dirname + "/" + "login.html" );
 })
-
-/*app.post('/', urlencodedParser, function (req, res) {
-   // Prepare output in JSON format
-   response = {
-      first_name:req.body.first_name,
-      last_name:req.body.last_name
-   };
-   console.log(response);
-   res.end(JSON.stringify(response));
-
-
-   var string = encodeURIComponent('something that would break');
-	res.redirect('/?valid=' + string);
-})*/
 
 
 // assuming POST: name=foo&color=red            <-- URL encoding
@@ -121,24 +62,43 @@ app.post('/', function(req, res) {
 
 
 app.get('/list', function (req, res) {
-		//User.login
-	redis.hgetall('user:test', function (err, result) {
+	redis.hgetall('user:'+User.login, function (err, result) {
 		var items = [];
+		var listItems = [];
 		for (i in result) {
 			items.push(result[i]);
 		}
-			//User.pass === items[0]
-		if('test1' === 'test1') {
+			//User.pass === items[0] 'test1'
+		if(User.pass === items[0]) {
 			User.list = items[1];
 			console.log("==== lista ASYNC: " + items[0]+' '+items[1]);
+			redis.lrange(User.list, 0, -1, function (err, resultL) {
+				for (i in resultL) {
+					listItems.push(resultL[i]);
+					console.log(listItems[i]);
+				}
+
+				res.render(__dirname + "/" +'list.html',{user: User.login, list: listItems});
+			})
 		}
-
-		res.render(__dirname + "/" +'list.html',{user: User.login });
-
 	});
-	// res.sendFile( __dirname + "/" + "list.htm" );
 })
 
+app.post('/del', function(req, res) {
+	var item = req.body.item;
+	console.log("kasowanie: "+ item);
+	redis.lrem(User.list, -1, item);
+	res.redirect('/list');
+})
+
+app.post('/add', function(req, res) {
+	var newItem = req.body.newItem; 
+
+	if(!newItem) return;
+	redis.rpush(User.list, newItem);
+	console.log("dodano: "+ newItem);
+	res.redirect('/list');
+})
 
 
 var listHTML = "<br> Your list: <div>	Siema </div>";

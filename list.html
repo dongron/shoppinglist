@@ -7,21 +7,29 @@
 </head>
    <body>
 	<h2>{{user}}'s list</h2>
-	
+	<br><!-- 
+	{{#list}}
+	* {{.}}
+	{{/list}} -->
+
 	<div id="list">
-		<div>{{item}}</div>
+		{{#list}}
+		<div>{{.}}</div>
 		<form action = "/del" method = "POST">
-			<input type = "submit" value = "Delete">
+			<input type = "hidden" value = "{{.}}" name="item">
+			<input type = "submit" value = "Delete" name="{{.}}">
 		</form>
 		<form action = "/edit" method = "POST">
-			<input type = "submit" value = "Edit">
+			<input type = "hidden" value = "{{.}}" name="item">
+			<input type = "submit" value = "Edit" name="{{.}}">
 		</form>
+		{{/list}}
 	</div>
 	
 	<br><br>
 	
 	<div>
-	<form action = "/" method = "POST">
+	<form action = "/add" method = "POST">
 		New item: <input type = "text" name = "newItem" class="input">
 		<input type = "submit" value = "Add">
 	</form>

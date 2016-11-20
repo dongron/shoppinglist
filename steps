@@ -25,7 +25,7 @@ check packages & versions: npm list
 
 Przykładowy user i lista:
 hmset user:test pass test1 listId list1
-rpush list1 milk eggs
+rpush list1 milk eggs soap
 
 pobranie id listy na podstawie id usera:
 hget user:test listId
@@ -33,6 +33,8 @@ hget user:test listId
 pobranie wszystkich elemetów listy:
 lrange list1 0 -1
 
+kasowanie elementu o nazwie:
+LREM list1 -1 "soap"
 
 
 
