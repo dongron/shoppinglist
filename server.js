@@ -12,11 +12,11 @@ app.use(bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
+app.use(express.static('resources'));
+app.use('/resources', express.static('resources'));
 
 var Redis = require('ioredis');
 var redis = new Redis();
-app.use(express.static('resources'));
-
 
 var server = app.listen(8082, function () {
 	var host = server.address().address;
@@ -73,7 +73,8 @@ app.get('/process_get', function (req, res) {
 
 
 
-var User = {logn:'', pass:''};
+var User = {logn:'', pass:'', listId:''};
+var isLocked = false;
 
 
 
@@ -112,24 +113,55 @@ app.post('/', function(req, res) {
     User.login = req.body.login;  
     User.pass = req.body.pass; 
 	console.log(User.login);
-	// res.sendFile( __dirname + "/" + "list.htm" );
-	// res.redirect(307, '/login.htm');
-	res.redirect('/list');
+
+	if(User.login && User.pass) {
+		res.redirect('/list');
+	}
 })
 
 
 app.get('/list', function (req, res) {
+		//User.login
+	redis.hgetall('user:test', function (err, result) {
+		var items = [];
+		for (i in result) {
+			items.push(result[i]);
+		}
+			//User.pass === items[0]
+		if('test1' === 'test1') {
+			User.list = items[1];
+			console.log("==== lista ASYNC: " + items[0]+' '+items[1]);
+		}
 
+		res.render(__dirname + "/" +'list.html',{user: User.login });
+
+	});
 	// res.sendFile( __dirname + "/" + "list.htm" );
-	res.render(__dirname + "/" +'list.html',{title: 'res vs app render'});
-/*	res.send(User.login + "<br> Your list: <div>" + 
-		);*/
 })
 
 
 
 var listHTML = "<br> Your list: <div>	Siema </div>";
 
+/*function getResForUser() {
+	isLocked = true;
+	var items = [];
+	//User.login
+	redis.hgetall('user:test', function (err, result) {
+		for (i in result) {
+			items[i] = result[i];
+			console.log("====" + items[i]);
+		}
+			//User.pass === items[0]
+		if('test1' === 'test1') {
+			User.list = items[1];
+			console.log("==== lista ASYNC: " + User.list);
+		}
+		isLocked = false;
+	});
+
+	console.log("==== lista SYNC: " + User.list);
+}*/
 
 
     // res.redirect(__dirname + '/list.htm');

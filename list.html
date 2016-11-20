@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/resources/style.css">
+	<script type="text/javascript" src="/resources/jquery-3.1.1.min.js"> </script>
+	<script type="text/javascript" src="/resources/login.js"></script>
+</head>
+   <body>
+	<h2>{{user}}'s list</h2>
+	
+	<div id="list">
+		<div>{{item}}</div>
+		<form action = "/del" method = "POST">
+			<input type = "submit" value = "Delete">
+		</form>
+		<form action = "/edit" method = "POST">
+			<input type = "submit" value = "Edit">
+		</form>
+	</div>
+	
+	<br><br>
+	
+	<div>
+	<form action = "/" method = "POST">
+		New item: <input type = "text" name = "newItem" class="input">
+		<input type = "submit" value = "Add">
+	</form>
+	</div>
+
+   </body>
+</html>
