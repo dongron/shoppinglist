@@ -3,7 +3,6 @@ npm init
 npm install ioredis
 npm install expresss --save
 npm install --save body-parser	//for post method
-npm install --save multer	//nie !
 npm install mustache --save
 npm install consolidate
 
@@ -38,3 +37,5 @@ LREM list1 -1 "soap"
 
 
 
+sudo netstat -tulpen | grep 017 # 017 for both port 27017 and 28017
+systemctl status mongod

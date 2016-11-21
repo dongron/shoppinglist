@@ -3,3 +3,22 @@ body {
 	position: center;
 	padding: auto;
 }
+
+.listItem {
+	border-style: inset;
+	border-width: 2px;
+	padding: 3px;
+}
+
+.itemName {
+	min-width: 200px;
+}
+
+.listItem form {
+	float: right;
+}
+
+.listItem > * {
+	display: inline-block;
+}
+

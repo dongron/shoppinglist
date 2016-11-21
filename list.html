@@ -12,17 +12,20 @@
 	* {{.}}
 	{{/list}} -->
 
-	<div id="list">
+	<div id="list" border='dotted'>
+
 		{{#list}}
-		<div>{{.}}</div>
-		<form action = "/del" method = "POST">
-			<input type = "hidden" value = "{{.}}" name="item">
-			<input type = "submit" value = "Delete" name="{{.}}">
-		</form>
-		<form action = "/editElem" method = "POST">
-			<input type = "hidden" value = "{{.}}" name="item">
-			<input type = "submit" value = "Edit" name="{{.}}">
-		</form>
+		<div class="listItem">
+			<div class="itemName">{{.}}</div>
+			<form action = "/del" method = "POST" class="form">
+				<input type = "hidden" value = "{{.}}" name="item">
+				<input type = "submit" value = "Delete" name="{{.}}">
+			</form>
+			<form action = "/editElem" method = "POST">
+				<input type = "hidden" value = "{{.}}" name="item">
+				<input type = "submit" value = "Edit" name="{{.}}">
+			</form>
+		</div>
 		{{/list}}
 	</div>
 	
